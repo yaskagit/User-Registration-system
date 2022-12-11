@@ -56,9 +56,8 @@ require("config.php");
         $username = mysqli_real_escape_string($conn,$_POST['username']);
         $password = mysqli_real_escape_string($conn,$_POST['password']);
         $cpassword = mysqli_real_escape_string($conn,$_POST['cpassword']);
-        $role = mysqli_real_escape_string($conn,$_POST['role']);
         
-        if(empty($fullname) || empty($username) || empty($password) || empty($cpassword) || empty($role)){
+        if(empty($fullname) || empty($username) || empty($password) || empty($cpassword) ){
             header("Location:../../?message=Pleasefillallfields");
 
 
@@ -79,10 +78,49 @@ require("config.php");
                 }
                 else{
                     $passwordHash = base64_encode($password);
+                    $userrole = "editor";
+                    $insert = mysqli_query($conn,"INSERT INTO adminlogin(admin_name, username, password,role) 
+                    VALUES('$fullname','$username','$passwordHash','$userrole')");
+                    if($insert){
+                        header("Location:../../?message=Successreg");
+                }
+            }
+        }
+            }
+        }
+    }
+    if(isset($_POST['signupadmin'])){
+        $fullname = mysqli_real_escape_string($conn,$_POST['fullname']);
+        $username = mysqli_real_escape_string($conn,$_POST['username']);
+        $password = mysqli_real_escape_string($conn,$_POST['password']);
+        $cpassword = mysqli_real_escape_string($conn,$_POST['cpassword']);
+        $role = mysqli_real_escape_string($conn,$_POST['role']);
+        
+        if(empty($fullname) || empty($username) || empty($password) || empty($cpassword) || empty($role)){
+            header("Location:../?message=Pleasefillallfields");
+
+
+        }
+        else{
+            if($password != $cpassword){
+                header("Location:../?message=passworderror");
+            }
+            else{
+                if(!preg_match('/^[a-zA-Z0-9 ]*$/', $fullname)){
+                header("Location:../?message=incorrectfullname");
+            }
+            else{
+                $fetchadmins = mysqli_query($conn,"SELECT * FROM adminlogin WHERE admin_name = '$fullname' and username = '$username'");
+                $countadmins = mysqli_num_rows($fetchadmins);
+                if($countadmins > 0){
+                    header("Location:../?message=adminexists");
+                }
+                else{
+                    $passwordHash = base64_encode($password);
                     $insert = mysqli_query($conn,"INSERT INTO adminlogin(admin_name, username, password, role) 
                     VALUES('$fullname','$username','$passwordHash','$role')");
                     if($insert){
-                        header("Location:../../?message=Successreg");
+                        header("Location:../?message=Successreg");
                 }
             }
         }
@@ -112,7 +150,7 @@ require("config.php");
                 
             }
             else{
-                header("Location:../../?message=incorectusernameorpassword");
+                header("Location:404page.php?message=incorectusernameorpassword");
             }
         }
     }
@@ -166,6 +204,41 @@ require("config.php");
          }
 
     }
-       
+    
+    if(isset($_POST['change'])){
+        $oldpassword = mysqli_real_escape_string($conn,$_POST['oldpassword']);
+        $newpassword = mysqli_real_escape_string($conn,$_POST['newpassword']);
+        
+        if(empty($oldpassword) || empty($newpassword)){
+            header("Loction:../?message=pleasefillallfields");
+        }
+        else{
+            $oldpasswordhash = base64_encode($oldpassword);
+            $select = mysqli_query($conn,"SELECT * FROM adminlogin Where password = '$oldpasswordhash'");
+            $count = mysqli_num_rows($select);
+            if($count > 0){
+                echo $count;
+                $passwordHash = base64_encode($newpassword);
+                $updatepasword = mysqli_query($conn,"UPDATE adminlogin SET password = '$passwordHash' Where password = '$oldpasswordhash'");
+                if($updatepasword){
+                    header("Location:../../index.php?message=successfulychangepassword");
+                }else{
+                    echo "Sql Erorr";
+                }
+            }
+            else{
+                echo"mas hayno ninkan";
+            }
+        }
+    }
+    if(isset($_GET['user_id'])){
+        $user_id = $_GET['user_id'];
+        $delete = mysqli_query($conn,"DELETE FROM users WHERE user_id = '$user_id'");
+        if($delete){
+            header("Location:../index.php?message=deleted");
+        }else{
+            echo"SQL ERORR";
+        }
+    }
 
  ?>

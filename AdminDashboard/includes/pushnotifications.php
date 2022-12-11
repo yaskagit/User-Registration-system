@@ -128,8 +128,27 @@
               Please fill all fields
               </strong>
             </div>
+            <?php         
+    }
+    elseif($message == "Successupdate")
+        {
+            ?>
+            <div class="alert alert-warning">
+              <strong>
+              Successfuly Updated
+              </strong>
+            </div>
             <?php 
         }
-        
+    elseif($message == "deleted")
+        {
+            ?>
+            <div class="alert alert-warning">
+              <strong>
+              Successfuly Deleted 
+              </strong>
+            </div>
+            <?php 
+        }
     }
 ?>

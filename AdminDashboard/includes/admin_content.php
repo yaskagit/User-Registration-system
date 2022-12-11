@@ -9,7 +9,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item active">Admin Dashboard</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -26,152 +26,7 @@
                 require('pushnotifications.php');
             }
         ?>
-        <div class="row">
-          <div class="col-lg-2 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-              <h3>
-                  <?php 
-                require('includes/config.php');
-                $query = mysqli_query($conn,"SELECT * FROM users Where city = 'hargeisa'");
-                $count = mysqli_num_rows($query);
-                if($count > 0){
-                  echo $count;
-                }
-                  ?>
-                </h3>
-
-                <p>Hargeisa Users</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-location"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-2 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>
-                <h3>
-                  <?php 
-                require('includes/config.php');
-                $query = mysqli_query($conn,"SELECT * FROM users Where city = 'jigjiga'");
-                $count = mysqli_num_rows($query);
-                if($count > 0){
-                  echo $count;
-                }
-                  ?>
-                </h3>
-              </h3>
-
-                <p>Jigjiga Users</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-2 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-              <h3>
-                  <?php 
-                require('includes/config.php');
-                $query = mysqli_query($conn,"SELECT * FROM users Where city = 'garowe'");
-                $count = mysqli_num_rows($query);
-                if($count > 0){
-                  echo $count;
-                }
-                  ?>
-                </h3>
-
-                <p>Garowe users</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-2 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-              <h3>
-                  <?php 
-                require('includes/config.php');
-                $query = mysqli_query($conn,"SELECT * FROM users Where city = 'mogadisho'");
-                $count = mysqli_num_rows($query);
-                if($count > 0){
-                  echo $count;
-                }
-                  ?>
-                </h3>
-
-                <p>Mogdisho Users</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <div class="col-lg-2 col-6">
-            <!-- small box -->
-            <div class="small-box bg-dark">
-              <div class="inner">
-              <h3>
-                  <?php 
-                require('includes/config.php');
-                $query = mysqli_query($conn,"SELECT * FROM users");
-                $count = mysqli_num_rows($query);
-                if($count > 0){
-                  echo $count;
-                }
-                  ?>
-                </h3>
-
-                <p>Total Users</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <div class="col-lg-2 col-6">
-            <!-- small box -->
-            <div class="small-box bg-primary">
-              <div class="inner">
-                <h3>
-                  <?php 
-                require('includes/config.php');
-                $query = mysqli_query($conn,"SELECT * FROM adminlogin");
-                $count = mysqli_num_rows($query);
-                if($count > 0){
-                  echo $count;
-                }
-                  ?>
-                </h3>
-
-                <p>Total of System Admins</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
+            <?php require('includes/analysis.php'); ?>
         <!-- /.row -->
         <!-- Main row -->
         <div class="container-fluid ml-0">
@@ -185,13 +40,19 @@
             
             <button type="submit" class="btn btn-success m-1 p-3 w-25 "  data-toggle="modal" data-target="#addusermodal">
                 <strong>Add New user</strong>
-                </button>
+            </button>
+            <button type="submit" class="btn btn-primary m-1 p-3"  data-toggle="modal" data-target="#addnewadmin">
+                <strong>Add New Admin</strong>
+            </button>
+            <button type="submit" class="btn btn-warning m-1 p-3 w-25 "  data-toggle="modal" data-target="#changepassword">
+                <strong>Change Password</strong>
+            </button>
                 <form  action="includes/functions.php" method="post">
 
-              <button type="submit" name="csv" class="btn btn-success m-1 p-3  " >
+              <button type="submit" name="csv" class="btn btn-danger m-1 p-3  " >
                 <strong>Report As CSV</strong>
               </button>
-              <button type="submit" name="backup" class="btn btn-success m-1 p-3   " >
+              <button type="submit" name="backup" class="btn btn-dark m-1 p-3   " >
               <strong>Get Back Up</strong>
               </button>
               
@@ -203,6 +64,9 @@
                 <button type="submit" class="btn btn-success m-1 p-3 w-25 "  data-toggle="modal" data-target="#addusermodal">
                 <strong>Add New user</strong>
                 </button>
+                <button type="submit" class="btn btn-warning m-1 p-3 w-25 "  data-toggle="modal" data-target="#changepassword">
+                  <strong>Change Password</strong>
+              </button>
                 <?php 
                }
             ?>
@@ -306,20 +170,13 @@
             </div>
         </div>
         </div>
-       <div class="modal fade" id="addusermodal">
-        <div class="modal-dialog  modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <?php require('entryform.php'); ?>
-                </div>
-            </div>
-        </div>
-       </div>
+       <?php require('includes/modals.php'); ?>
         <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
+  
+
+
+          

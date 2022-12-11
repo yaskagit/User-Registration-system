@@ -31,7 +31,21 @@
                                 <td><?php echo $fetchData['city']; ?></td>
                                 <td><?php echo $fetchData['dob']; ?></td>
                                 <td><a href="?user_id=<?php echo $fetchData['user_id']?>&page=updateform" class="btn btn-info">Update</button></td>
-                                <td><a href="" class="btn btn-danger">Delete</a></td>                          
+                                <td>
+                                    <?php 
+                                        if(isset($_SESSION['role']) and $_SESSION['role'] == 'Admin'){
+                                            ?>
+                                            <a href="includes/functions.php?user_id=<?php echo $fetchData['user_id']?>" class="btn btn-danger">Delete</a>
+                                            <?php 
+
+                                        }
+                                        else{
+                                            ?>
+                                            <a hidden href="includes/functions.php?user_id=<?php echo $fetchData['user_id']?>" class="btn btn-danger">Delete</a>
+                                            <?php 
+                                        }
+                                    ?>
+                                </td>                          
                             </tr>
                                 <?php } ?>
                         </tbody>
